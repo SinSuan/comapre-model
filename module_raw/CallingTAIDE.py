@@ -8,7 +8,7 @@ token = os.getenv('taide_api_key')
 
 # config 讀取資訊
 config = configparser.ConfigParser()
-config.read('./config.ini') 
+config.read('./config.ini')
 host_from_nlplab = config['host']['nlplab_taide']
 host_from_nstc = config['host']['nstc_taide']
 
@@ -128,7 +128,7 @@ def SummaryGeneratorWithTAIDE(question, answers):
         "repetition_penalty":1.2
     }
 
-    start = time.time() 
+    start = time.time()
     delta_time = 0
     sleep_time = 30
     delta_sleep = 10
