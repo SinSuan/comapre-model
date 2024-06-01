@@ -17,8 +17,15 @@ host_txl = config['host']['nlplab_taide_llama3']
 host_braw = config['host']['nlplab_breeze']
 host_bcot = config['host']['nlplab_breeze_cot']
 
-def call_model(model_type, full_prompt):
+def call_model(model_type: str, full_prompt: str) -> str:
     """ general model caller for various models
+
+    Var:
+        model_type: str
+            tsg   taide e.1.1.0-SG
+            txl   taide Llama3-TAIDE-LX-8B-Chat-Alpha1
+            braw  Breeze-7B-Instruct-v1_0
+            bcot  Breeze-v1_0-CoT-v0_2-full
     """
     try:
 
@@ -38,8 +45,15 @@ def call_model(model_type, full_prompt):
         print(r.text)
         return 'exception occurred'
 
-def get_param(model_type, full_prompt):
+def get_param(model_type: str, full_prompt: str):
     """ general parameter creator for various models
+    
+    Var:
+        model_type: str
+            tsg   taide e.1.1.0-SG
+            txl   taide Llama3-TAIDE-LX-8B-Chat-Alpha1
+            braw  Breeze-7B-Instruct-v1_0
+            bcot  Breeze-v1_0-CoT-v0_2-full
     """
 
     if model_type == "tsg":

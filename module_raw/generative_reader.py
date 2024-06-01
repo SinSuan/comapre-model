@@ -1,8 +1,11 @@
+"""
+generative_reader.py from the raw code
+"""
+import configparser
 import torch
-import configparser 
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
 from tqdm import trange
-from .context_prefix_tree import ContextPrefixTree
+from .subfolder.context_prefix_tree import ContextPrefixTree
 
 # config 讀取資訊
 config = configparser.ConfigParser()
@@ -33,7 +36,7 @@ def get_prompt(question, context):
 
     context_start = len(prompt)
     context_end = context_start + len(context)
-    
+
     prompt = prompt + context + "\n [/INST]答案:\n"
     return prompt, context_start, context_end
 
@@ -45,7 +48,7 @@ def generative_reader(question: str,
     prompts = []
     context_starts = []
     context_ends = []
-    
+
     # convert question and context to llama2 prompt format
     for context in contexts:
         prompt, context_start, context_end = get_prompt(question, context)
@@ -55,11 +58,11 @@ def generative_reader(question: str,
             prompt, context_start, context_end = get_prompt(question, context[:-cut_len])
             input_len = tokenizer(prompt, add_special_tokens=False, return_tensors="pt",).input_ids.size(1)
             cut_len += 10
-        
+
         prompts.append(prompt)
         context_starts.append(context_start)
         context_ends.append(context_end)
-    
+
     eos_token_id = tokenizer.eos_token_id
     num_return_sequences = 1 if not hasattr(generation_config, "num_return_sequences") else generation_config.num_return_sequences
     context_prefix_tree =  ContextPrefixTree(eos_token_id = tokenizer.eos_token_id, 

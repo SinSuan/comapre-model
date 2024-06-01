@@ -6,16 +6,27 @@
 """
 
 import re
-from about_model.call_model import call_model
-from about_model.create_full_prompt import prompt_creator
+from .about_model.call_model import call_model
+from .about_model.create_full_prompt import prompt_creator
 
-def handle_task(task_type, model_type, query, answers=None):
+def task_handler(task_type: str, model_type: str, query: str, answers=None)->str:
     """ get task system prompt
     Var:
         task_type: str
             cls   question_classification
             hyde  question_expansion
             sum   summary_generator
+        
+        model_type: str
+            tsg   taide e.1.1.0-SG
+            txl   taide Llama3-TAIDE-LX-8B-Chat-Alpha1
+            braw  Breeze-7B-Instruct-v1_0
+            bcot  Breeze-v1_0-CoT-v0_2-full
+
+        query: str
+        
+        answers: str
+
     Return:
         String
     """
@@ -66,7 +77,7 @@ def get_system_prompt(task_type:str) -> str:
 
     return system_prompt
 
-def get_user_prompt(task_type, query, answers=None):
+def get_user_prompt(task_type: str, query: str, answers=None) -> str:
     """ get task system prompt
     Var:
         task_type: str

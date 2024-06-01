@@ -1,13 +1,13 @@
-from udicOpenData.stopwords import rmsw
+""" for experiementing the pipeline of the model
+"""
 
-#model1
-def get_hints(query: str):
-    hints = ""
-    for i in rmsw(query, flag=True):
-        print(i)
-        if (i[1] not in ['ng']) and (i[0] not in ["原因", "為何"]):
-            hints = hints+" "+i[0]
-    return hints
+from compare_model.module_test.task_handler import task_handler
+from compare_model.module_test.get_hints import get_hints
+
+def main(query):
+    """ main function for the pipeline
+    """
+    hints = get_hints(query)
 
 #step 0: question classification
 #step 1: question expansion with hyde
@@ -17,5 +17,5 @@ def get_hints(query: str):
 
 
 if __name__ == "__main__":
-    hints = get_hints("為何徒長病發生")
-    print(hints)
+    QUERY = "水稻稻熱病是由水稻稻熱病病毒所引起的嗎？"
+    main(QUERY)
