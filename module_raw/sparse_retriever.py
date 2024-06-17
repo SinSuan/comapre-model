@@ -1,17 +1,16 @@
+import os
 import json
 from pyserini.search.lucene import LuceneSearcher
 from pyserini.index import IndexReader
 import sys
 import configparser
 
-
-
-sys.path.append("..")
-
+# sys.path.append("..")
+path_to_config = os.getenv('path_to_config')
 
 # config 讀取資訊
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read(path_to_config)
 inverted_index_filepath = config['filepath']['inverted_index']
 
 print('Loading Inverted Index for 神農gpt...')
@@ -36,12 +35,13 @@ def sparse_retriever(question, k=40) -> list[str]:
         _source = json.loads(i.raw)["source"]
         
         info_dic = {
-            'author':_author,
-            'contents':_content,
+            'id':i.docid,
+            'type':_type,
+            'source':_source,
             'date':_date,
             'url':_url,
-            'type':_type,
-            'source':_source
+            'author':_author,
+            'contents':_content,
         }
 
 

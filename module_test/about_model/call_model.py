@@ -8,10 +8,14 @@ import os
 import requests
 
 token = os.getenv('taide_api_key')
+# print(f"token:{token}")
+# path_to_config = "/user_data/DG/113_0426/compare_model/private/config.ini"
+path_to_config = os.getenv('path_to_config')
+# print(f"path_to_config:{path_to_config}")
 
 # config 讀取資訊
 config = configparser.ConfigParser()
-config.read('./config.ini')
+config.read(path_to_config)
 host_tsg = config['host']['nstc_taide']
 host_txl = config['host']['nlplab_taide_llama3']
 host_braw = config['host']['nlplab_breeze']
@@ -81,7 +85,7 @@ def param_4_tsg(full_prompt):
         "top_p": 0.9,
         "presence_penalty": 1,
         "frequency_penalty": 1,
-        "max_tokens": 200,
+        "max_tokens": 600,
         "repetition_penalty":1.2
     }
     return host, headers, data

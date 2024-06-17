@@ -1,3 +1,4 @@
 private/
 test*
 model_record/
+*.log

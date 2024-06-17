@@ -30,6 +30,8 @@ def task_handler(task_type: str, model_type: str, query: str, answers=None)->str
     Return:
         String
     """
+    print(f"enter task_handler, task_type = {task_type}")
+
     system_prompt = get_system_prompt(task_type)
     user_prompt = get_user_prompt(task_type, query, answers)
     full_prompt = prompt_creator(model_type, system_prompt, user_prompt)
@@ -50,6 +52,7 @@ def task_handler(task_type: str, model_type: str, query: str, answers=None)->str
 
         result = question_type_category[type_num]
 
+    print(f"exit task_handler, task_type = {task_type}")
     return result
 
 def get_system_prompt(task_type:str) -> str:
@@ -63,6 +66,7 @@ def get_system_prompt(task_type:str) -> str:
     Return:
         String
     """
+    print(f"enter get_system_prompt, task_type = {task_type}")
 
     if task_type=="cls":
         system_prompt ="""你現在是一位農業專家，請對輸入問題進行三種分類。農業事實驗證問題(例子:水稻稻熱病是由水稻稻熱病病毒所引起的嗎？、農藥會造成植物根部萎縮？)、\
@@ -75,6 +79,7 @@ def get_system_prompt(task_type:str) -> str:
     elif task_type=="sum":
         system_prompt = "你是一個農業專家，請幫我完成任務以下問題，請用中文回答。"
 
+    print(f"exit get_system_prompt, task_type = {task_type}")
     return system_prompt
 
 def get_user_prompt(task_type: str, query: str, answers=None) -> str:
@@ -88,10 +93,12 @@ def get_user_prompt(task_type: str, query: str, answers=None) -> str:
     Return:
         String
     """
+    print(f"enter get_user_prompt, task_type = {task_type}")
 
     if task_type in ["cls", "hyde"]:
         user_prompt = query
     elif task_type=="sum":
         user_prompt = f"我有以下片段關於{query}的答案：{str(answers)} 你可以試著幫我將結果進行統整摘要嗎？"
 
+    print(f"exit get_user_prompt, task_type = {task_type}")
     return user_prompt
